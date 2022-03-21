@@ -13,6 +13,10 @@ CKnave = Symbol("C is a Knave")
 # A says "I am both a knight and a knave."
 knowledge0 = And(
     # TODO
+    Or(AKnight, AKnave),
+    Not(And(AKnight, AKnave)),
+    # Info given by the puzzle
+    Biconditional(AKnight, And(AKnight, AKnave))
 )
 
 # Puzzle 1
@@ -20,6 +24,13 @@ knowledge0 = And(
 # B says nothing.
 knowledge1 = And(
     # TODO
+    Or(AKnight, AKnave),
+    Not(And(AKnight, AKnave)),
+    Or(BKnight, BKnave),
+    Not(And(BKnight, BKnave)),
+    # Info given by the puzzle
+    Implication(AKnight, And(AKnave, BKnave)),
+    Implication(And(AKnave, BKnave), AKnight)
 )
 
 # Puzzle 2
@@ -27,7 +38,23 @@ knowledge1 = And(
 # B says "We are of different kinds."
 knowledge2 = And(
     # TODO
-)
+    Or(AKnight, AKnave),
+    Not(And(AKnight, AKnave)),
+    Or(BKnight, BKnave),
+    Not(And(BKnight, BKnave)),
+    Or(CKnight, CKnave),
+    Not(And(CKnight, CKnave)),
+    # Info given by the puzzle
+    Biconditional(AKnight,
+                  Or(Biconditional(AKnight, BKnight),
+                     Biconditional(AKnave, BKnave)
+                     )),
+    Biconditional(BKnight,
+                  Or(Biconditional(AKnight, BKnave),
+                     Biconditional(AKnave, BKnight)
+                     )
+                  )
+) 
 
 # Puzzle 3
 # A says either "I am a knight." or "I am a knave.", but you don't know which.
@@ -36,6 +63,23 @@ knowledge2 = And(
 # C says "A is a knight."
 knowledge3 = And(
     # TODO
+    Or(AKnight, AKnave),
+    Not(And(AKnight, AKnave)),
+    Or(BKnight, BKnave),
+    Not(And(BKnight, BKnave)),
+    Or(CKnight, CKnave),
+    Not(And(CKnight, CKnave)),
+    # Info given from the puzzle
+    Biconditional(AKnight,
+                  And(
+                      Or(AKnight, AKnave),
+                      Not(And(AKnight, AKnave))
+                  )
+                  ),
+    Biconditional(BKnight, Biconditional(
+        AKnight, AKnave)),  # Be says A is lying
+    Biconditional(BKnight, CKnave),
+    Biconditional(CKnight, AKnight)
 )
 
 
